@@ -106,9 +106,27 @@ class MenuTabLayout : LinearLayout, View.OnClickListener {
         }
     }
 
+    private lateinit var mCloseObserver: MenuCloseObserver
+
+    private fun create(): MenuCloseObserver {
+        return object : MenuCloseObserver() {
+            override fun closeMenu() {
+                this@MenuTabLayout.closeMenu()
+            }
+        }
+    }
 
     fun setAdapter(adapter: BaseMenuAdapter) {
+
+
+        if (this::mAdapter.isInitialized && this::mCloseObserver.isInitialized) {
+            mAdapter.unregisterCloseObserver(mCloseObserver)
+        }
+
+        mCloseObserver = create()
+
         this.mAdapter = adapter
+        mAdapter.registerCloseMenuObserver(mCloseObserver)
         val count = mAdapter.getCount()
         for (i in 0 until count) {
             // 获取菜单的Tab
@@ -149,7 +167,7 @@ class MenuTabLayout : LinearLayout, View.OnClickListener {
         }
     }
 
-    private fun closeMenu() {
+    public fun closeMenu() {
         if (mAnimationExecute)
             return
 

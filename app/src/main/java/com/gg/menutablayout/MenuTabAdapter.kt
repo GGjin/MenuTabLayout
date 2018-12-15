@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 
 /**
  * Creator : GG
@@ -13,9 +14,10 @@ import android.widget.TextView
  * Mail    : gg.jin.yu@gmail.com
  * Explain :
  */
-class MenuTabAdapter(context: Context) : BaseMenuAdapter {
+class MenuTabAdapter(context: Context) : BaseMenuAdapter() {
 
-    var mContext: Context = context
+
+    private var mContext: Context = context
 
     private val items = arrayListOf("类型", "品牌", "价格", "更多")
 
@@ -39,6 +41,12 @@ class MenuTabAdapter(context: Context) : BaseMenuAdapter {
         return textView.apply {
             text = items[position]
             setTextColor(Color.BLACK)
+            setOnClickListener {
+                if (menuCloseObserver != null)
+                    menuCloseObserver!!.closeMenu()
+
+                Toast.makeText(mContext, "hah", Toast.LENGTH_LONG).show()
+            }
         }
     }
 }

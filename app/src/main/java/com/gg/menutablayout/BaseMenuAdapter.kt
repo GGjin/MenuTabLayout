@@ -9,23 +9,32 @@ import android.view.ViewGroup
  * Mail    : gg.jin.yu@gmail.com
  * Explain :
  */
-interface BaseMenuAdapter {
+abstract class BaseMenuAdapter {
+
+     var menuCloseObserver: MenuCloseObserver? = null
+
+    fun registerCloseMenuObserver(observer: MenuCloseObserver) {
+        menuCloseObserver = observer
+    }
+
+    fun unregisterCloseObserver(observer: MenuCloseObserver) {
+        menuCloseObserver = null
+    }
 
     //获取总共有多少条
-    fun getCount():Int
+   abstract fun getCount(): Int
 
     //
-    fun getMenuTabView(position:Int , viewGroup: ViewGroup) :View
+    abstract  fun getMenuTabView(position: Int, viewGroup: ViewGroup): View
 
-    fun getMenuDataView(position:Int , viewGroup: ViewGroup):View
+    abstract fun getMenuDataView(position: Int, viewGroup: ViewGroup): View
 
 
-
-    fun openMenu(tabView: View){
+    fun openMenu(tabView: View) {
 
     }
 
-    fun closeMenu(tabView: View){
+    fun closeMenu(tabView: View) {
 
     }
 }
